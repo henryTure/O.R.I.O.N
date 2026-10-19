@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="sv">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>ORION</title>
+  <meta name="description" content="ORION – personlig ledningscentral">
+  <meta name="theme-color" content="#05080A">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="ORION">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icons/icon-180.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+  <link rel="stylesheet" href="css/orion.css">
+</head>
+<body>
+  <div class="boot" id="boot" aria-hidden="true">
+    <div class="word"><span>O</span><span>R</span><span>I</span><span class="hl">O</span><span>N</span></div>
+    <div class="lines" id="bootLines"></div>
+    <div class="bar"><i id="bootBar"></i></div>
+    <div class="pct"><span>Startar</span><span id="bootPct">0 %</span></div>
+  </div>
+
+  <div class="wrap">
+    <header class="top">
+      <div class="brand" aria-label="ORION">ORI<span class="hl">O</span>N</div>
+      <div class="sub">Ledningscentral · Operatör <span data-operator>Henry</span></div>
+      <div class="clock" aria-live="off">
+        <span class="hm"><span id="hm">--:--</span><span class="s" id="ss">:--</span></span>
+        <span class="date" id="date"></span>
+      </div>
+      <ul class="lamps" id="lamps" aria-label="Systemstatus"></ul>
+    </header>
+
+    <main class="grid">
+      <div class="col">
+        <section class="panel" id="p-schedule">
+          <div class="ph"><h2>Schema</h2><span class="badge acc" data-klass>SAB2528</span></div>
+          <div class="rows" id="schedRows"></div>
+          <div class="foot" id="schedFoot">Källa: Skolschema</div>
+        </section>
+
+        <section class="panel" id="p-trading">
+          <div class="ph"><h2>Trading</h2><span class="badge warn">Simulerad</span></div>
+          <div class="kpis">
+            <div class="kpi"><span class="label">Budget</span><b id="tBudget">—</b></div>
+            <div class="kpi"><span class="label">Resultat</span><b id="tResult">—</b></div>
+            <div class="kpi"><span class="label">Ordrar</span><b id="tOrders">—</b></div>
+          </div>
+          <div class="chart" id="tChart"></div>
+          <div class="foot" id="tFoot">—</div>
+        </section>
+      </div>
+
+      <div class="col">
+        <section class="panel core" id="p-core" aria-label="Kärnan. Tryck för att analysera.">
+          <canvas id="coreCanvas"></canvas>
+          <div class="hud t"><span class="state">Kärna · <span id="coreState">Standby</span></span><span class="vakt">Vakt aktiv</span></div>
+          <div class="hud b"><span class="order" id="coreOrder">Inväntar order</span><span>Noder <span id="coreNodes">0</span></span></div>
+        </section>
+
+        <section class="panel" id="p-claude">
+          <div class="ph"><h2>Claude</h2><span class="badge acc" id="claudeBadge">Redo</span></div>
+          <div class="btns">
+            <a class="btn" data-link="quick" target="_blank" rel="noopener">Snabbläge<small>Vanliga frågor</small></a>
+            <a class="btn red" data-link="build" target="_blank" rel="noopener">Byggläge<small>Appar och hemsidor</small></a>
+          </div>
+          <div class="sep"></div>
+          <div class="label" style="color:var(--warn);margin-bottom:12px">Styrelse</div>
+          <a class="btn amber" data-link="board" target="_blank" rel="noopener">Kalla styrelsemöte<small>7 ledamöter + domare</small></a>
+        </section>
+      </div>
+
+      <div class="col">
+        <section class="panel" id="p-weather">
+          <div class="ph"><h2>Väder</h2><span class="badge">SMHI</span></div>
+          <div class="wx" id="wx"></div>
+          <div class="foot" id="wxFoot">—</div>
+        </section>
+
+        <section class="panel" id="p-school">
+          <div class="ph"><h2>Skola</h2></div>
+          <div class="btns" id="schoolBtns"></div>
+        </section>
+
+        <section class="panel" id="p-music">
+          <div class="music">
+            <div class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+            <div class="grow"><h2>Musik</h2><div class="label" id="musicState">Ljudkanal redo</div></div>
+            <a class="btn" id="spotifyBtn" target="_blank" rel="noopener">Öppna Spotify</a>
+          </div>
+        </section>
+      </div>
+
+      <div class="row">
+        <section class="panel" id="p-news">
+          <div class="ph"><h2>Underrättelse</h2><span class="badge" id="newsBadge">Exempel</span></div>
+          <div class="list" id="newsList"></div>
+        </section>
+        <section class="panel" id="p-github">
+          <div class="ph"><h2>Projektlogg</h2><span class="badge" id="ghBadge">GitHub</span></div>
+          <div class="list" id="ghList"></div>
+        </section>
+        <section class="panel" id="p-syslog">
+          <div class="ph"><h2>Systemlogg</h2><span class="badge acc">Live</span></div>
+          <ul class="log" id="syslog" aria-live="polite"></ul>
+        </section>
+      </div>
+    </main>
+
+    <footer class="page-foot">
+      <span>ORION v0.1 · Testversion</span>
+      <span id="footData">Alla siffror är exempel</span>
+      <span>Tryck på kärnan</span>
+    </footer>
+  </div>
+
+  <script type="module" src="src/main.js"></script>
+</body>
+</html>
