@@ -1,6 +1,6 @@
 // ORION service worker: gör appen installerbar och startbar utan nät.
 // Höj VERSION vid varje ändring så att mobilen hämtar nya filer.
-const VERSION = "orion-v1";
+const VERSION = "orion-v2";
 const SHELL = [
   "./",
   "index.html",
@@ -15,6 +15,8 @@ const SHELL = [
   "src/log.js",
   "src/boot.js",
   "src/core.js",
+  "src/voice.js",
+  "src/chat.js",
   "src/panels.js",
   "src/sources/index.js",
   "src/sources/_shared.js",

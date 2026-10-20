@@ -66,6 +66,14 @@
 
         <section class="panel" id="p-claude">
           <div class="ph"><h2>Claude</h2><span class="badge acc" id="claudeBadge">Redo</span></div>
+          <button class="voice" id="voiceBtn" type="button" data-state="idle">
+            <span class="mic" aria-hidden="true"><i></i></span>
+            <span><span class="vtitle">Tala med ORION</span><span class="vsub" id="voiceSub">Tryck och tala</span></span>
+          </button>
+          <p class="vtext" id="voiceText" aria-live="polite"></p>
+          <p class="vmsg" id="voiceMsg" hidden></p>
+          <button class="btn vsend" id="voiceSend" type="button" hidden>Skicka till Claude<small>Öppnar claude.ai med din text</small></button>
+          <div class="sep"></div>
           <div class="btns">
             <a class="btn" data-link="quick" target="_blank" rel="noopener">Snabbläge<small>Vanliga frågor</small></a>
             <a class="btn red" data-link="build" target="_blank" rel="noopener">Byggläge<small>Appar och hemsidor</small></a>

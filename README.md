@@ -16,7 +16,9 @@ Stilregler (färger, typsnitt, former och animationer) finns i [`CLAUDE.md`](CLA
 | `css/orion.css` | Utseendet |
 | `src/sources/` | En liten adapter per datakälla (`trading.js`, `weather.js`, `schedule.js`, `news.js`, `github.js` …) |
 | `src/panels.js` | Ritar varje panel utifrån adapterns svar |
-| `src/core.js` | Kärnan, den roterande sfären |
+| `src/core.js` | Kärnan: 3D-sfären med lägena VILA, LYSSNAR och ANALYSERAR |
+| `src/voice.js` | Knappen "Tala med ORION" (webbläsarens taligenkänning, sv-SE) |
+| `src/chat.js` | `sendToClaude()`: öppnar claude.ai med texten. Här kopplar du in en egen chatt via API senare |
 | `src/boot.js` | Uppstartssekvensen |
 | `sw.js` | Gör att appen kan installeras och startas utan nät |
 

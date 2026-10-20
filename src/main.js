@@ -4,6 +4,7 @@ import { $, reduced, pad, isoWeek, hhmmss } from "./ui.js";
 import { log } from "./log.js";
 import { boot } from "./boot.js";
 import { createCore } from "./core.js";
+import { createVoice } from "./voice.js";
 import { panels } from "./panels.js";
 import { adapters, startSources } from "./sources/index.js";
 
@@ -64,28 +65,29 @@ function updateFooter() {
 setInterval(() => sources.state.schedule && panels.schedule(sources.state.schedule), 30e3);
 
 // ---------- Kärnan ----------
-let orderTimer = 0;
-createCore($("#coreCanvas"), {
+const LABEL = {
+  vila: ["VILA", "Inväntar order"],
+  lyssnar: ["LYSSNAR", "Lyssnar"],
+  analysera: ["ANALYSERAR", "Analyserar"],
+};
+const core = createCore($("#coreCanvas"), {
   reduced,
   onNodes: (n) => ($("#coreNodes").textContent = n),
-  onState: (s) => {
-    const core = $("#p-core");
-    const order = $("#coreOrder");
-    clearInterval(orderTimer);
-    if (s === "analyze") {
-      core.classList.add("busy");
-      $("#coreState").textContent = "Analyserar";
-      let i = 0;
-      const step = () => (order.textContent = "Analyserar" + ".".repeat(i++ % 4));
-      step();
-      if (!reduced) orderTimer = setInterval(step, 260);
-      log("Kärna: analys begärd av operatör");
-    } else {
-      core.classList.remove("busy");
-      $("#coreState").textContent = "Standby";
-      order.textContent = "Inväntar order";
-      log("Kärna: analys klar · inga avvikelser");
-    }
+  onMode: (m) => {
+    $("#p-core").dataset.mode = m;
+    $("#coreState").textContent = LABEL[m][0];
+    $("#coreOrder").textContent = LABEL[m][1];
+    if (started) log(`Kärna: läge ${LABEL[m][0]}`);
+  },
+});
+
+// ---------- Tala med ORION ----------
+// När du slutat prata analyserar kärnan en stund och går sedan till VILA.
+// Kopplas en egen chatt in senare kan ANALYSERAR i stället ligga kvar tills svaret kommit.
+createVoice({
+  onMode: (m) => {
+    if (m === "analysera") { core.setMode("vila"); core.analyze(); }
+    else core.setMode(m);
   },
 });
 

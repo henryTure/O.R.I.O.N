@@ -1,7 +1,7 @@
 # ORION – stilregler
 
 ORION är en personlig ledningscentral (PWA) för Operatör Henry. Den här filen gäller
-alla ändringar i mappen `orion/`. Håll stilen exakt, även när nya paneler läggs till.
+alla ändringar i repot. Håll stilen exakt, även när nya paneler läggs till.
 
 ## Känsla
 - Mörk taktisk ledningscentral, militär och filmisk.
@@ -19,6 +19,9 @@ alla ändringar i mappen `orion/`. Håll stilen exakt, även när nya paneler l�
 | `--alarm`    | `#E5484D` | Röd: larm, ingen kontakt                        |
 | `--text`     | `#C8D3D5` | Ljusgrå brödtext                                |
 | `--dim`      | `#6E8286` | Dämpad text, etiketter                          |
+| `--ice`      | `#A8DCFF` | Blåvit: kärnans läge ANALYSERAR                 |
+
+Kärnans lägen: VILA = turkos, LYSSNAR = bärnsten, ANALYSERAR = blåvit. Färgen glider mjukt mellan dem.
 
 Bakgrunden har ett svagt rutnät och diskreta skanningslinjer. Lägg aldrig till nya färger
 utan att de först läggs in här och som variabel.

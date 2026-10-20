@@ -12,6 +12,7 @@
   --warn-dim: rgba(240, 180, 76, 0.55);
   --alarm: #E5484D;
   --alarm-dim: rgba(229, 72, 77, 0.6);
+  --ice: #A8DCFF;
   --text: #C8D3D5;
   --dim: #6E8286;
   --head: "Chakra Petch", "IBM Plex Mono", monospace;
@@ -207,6 +208,61 @@ a { color: inherit; text-decoration: none; }
 .btn.amber:hover { border-color: var(--warn); background: rgba(240, 180, 76, .06); }
 .btn.amber::after { background: linear-gradient(100deg, transparent, rgba(240, 180, 76, .16), rgba(255, 230, 180, .18), transparent); }
 .btns { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+[hidden] { display: none !important; }
+
+/* ---------- Tala med ORION ---------- */
+.voice {
+  position: relative; overflow: hidden;
+  display: flex; align-items: center; gap: 14px;
+  width: 100%; min-height: 64px; margin: 0 0 14px;
+  padding: 12px 14px;
+  border: 1px solid var(--accent-dim);
+  background: rgba(70, 214, 198, .04);
+  color: #E8EEEF; font: inherit; text-align: left;
+  cursor: pointer;
+  transition: border-color .3s, background .3s;
+}
+.voice:hover, .voice:focus-visible { background: var(--accent-faint); }
+.voice::after {
+  content: "";
+  position: absolute; top: 0; bottom: 0; left: -60%; width: 45%;
+  background: linear-gradient(100deg, transparent, rgba(70, 214, 198, .18), rgba(200, 255, 250, .22), transparent);
+  transform: skewX(-18deg);
+  pointer-events: none;
+}
+.voice:hover::after, .voice:focus-visible::after { animation: shine .75s var(--ease); }
+.voice:disabled { cursor: not-allowed; opacity: .55; }
+.voice .mic { position: relative; width: 16px; height: 16px; flex: none; color: var(--accent); }
+.voice .mic i {
+  position: absolute; inset: 4px;
+  background: currentColor; box-shadow: 0 0 10px currentColor;
+  animation: micdot 2s ease-in-out infinite;
+}
+.voice .mic::before {
+  content: ""; position: absolute; inset: 0;
+  border: 1px solid currentColor;
+  animation: micring 2s ease-out infinite;
+}
+.voice .vtitle { display: block; font: 600 13px/1.2 var(--head); letter-spacing: .26em; text-transform: uppercase; }
+.voice .vsub { display: block; margin-top: 4px; font-size: 10px; letter-spacing: .2em; color: var(--dim); text-transform: uppercase; }
+.voice[data-state="listen"] { border-color: var(--warn-dim); background: rgba(240, 180, 76, .05); }
+.voice[data-state="listen"] .mic { color: var(--warn); }
+.voice[data-state="listen"] .vsub { color: var(--warn); }
+.voice[data-state="done"] .mic { color: var(--ice); }
+.voice[data-state="done"] .vsub { color: var(--ice); }
+.voice[data-state="off"] .mic i, .voice[data-state="off"] .mic::before { animation: none; }
+@keyframes micdot { 0%, 100% { opacity: 1; } 50% { opacity: .35; } }
+@keyframes micring { from { transform: scale(.5); opacity: .9; } to { transform: scale(1.9); opacity: 0; } }
+.vtext {
+  min-height: 44px; margin: 0 0 10px; padding: 8px 12px;
+  border-left: 1px solid var(--line-hi);
+  color: var(--text); font-size: 12px; line-height: 1.6;
+}
+.vtext:empty::before { content: "Det du säger visas här"; color: var(--dim); font-size: 10px; letter-spacing: .18em; text-transform: uppercase; }
+.vtext .interim { color: var(--dim); }
+.vmsg { margin: 0 0 10px; font-size: 10px; letter-spacing: .16em; line-height: 1.6; text-transform: uppercase; color: var(--warn); }
+.vmsg.alarm { color: var(--alarm); }
+.vsend { width: 100%; }
 
 /* ---------- Kärnan ---------- */
 .core { padding: 0; aspect-ratio: 1 / 1.04; overflow: hidden; }
@@ -225,7 +281,7 @@ a { color: inherit; text-decoration: none; }
     linear-gradient(var(--line-hi), var(--line-hi)) top center / 1px 10px no-repeat,
     linear-gradient(var(--line-hi), var(--line-hi)) bottom center / 1px 10px no-repeat;
 }
-.core canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; cursor: crosshair; touch-action: pan-y; }
+.core canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; cursor: pointer; touch-action: pan-y; }
 .core .hud { position: absolute; left: 16px; right: 16px; font-size: 11px; letter-spacing: .26em; text-transform: uppercase; display: flex; justify-content: space-between; pointer-events: none; }
 .core .hud.t { top: 14px; color: var(--dim); }
 .core .hud.b { bottom: 14px; color: var(--dim); }
@@ -233,7 +289,8 @@ a { color: inherit; text-decoration: none; }
 .core .order { color: var(--accent); }
 .core .order::after { content: "_"; animation: caret 1s steps(1) infinite; }
 @keyframes caret { 50% { opacity: 0; } }
-.core.busy .state { color: var(--accent); }
+.core[data-mode="lyssnar"] .state, .core[data-mode="lyssnar"] .order { color: var(--warn); }
+.core[data-mode="analysera"] .state, .core[data-mode="analysera"] .order { color: var(--ice); }
 
 /* ---------- Schema ---------- */
 .rows { margin: 0 -16px; }
