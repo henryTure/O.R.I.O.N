@@ -19,7 +19,7 @@ export default {
 
     // SMHI:s öppna prognos-API (ingen nyckel behövs). Slå på med enabled: true.
     weather: {
-      enabled: false,
+      enabled: true,
       every: 600,
       platser: [
         { namn: "Öckerö", lat: 57.7085, lon: 11.6516 },
@@ -31,7 +31,7 @@ export default {
     news: { enabled: false, url: "", every: 900 },
 
     // GitHubs öppna API (ingen nyckel behövs för publika repon).
-    github: { enabled: false, user: "henryTure", every: 600 },
+    github: { enabled: true, user: "henryTure", every: 600 },
 
     // Länkar. Räknas som kopplade så länge enheten är online.
     claude: {
